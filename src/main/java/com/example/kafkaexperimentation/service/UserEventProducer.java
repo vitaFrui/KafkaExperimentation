@@ -1,6 +1,6 @@
 package com.example.kafkaexperimentation.service;
 
-import com.example.kafkaexperimentation.model.UserEvent;
+import com.example.kafkaexperimentation.model.UserEventV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,11 +17,25 @@ public class UserEventProducer {
     @Value("${kafka.user-event.topic.name}")
     private String userEventTopicName;
 
-    private final KafkaTemplate<String,UserEvent> kafkaTemplate;
+    @Value("${kafka.user-event-high-priority.topic.name}")
+    private String userEventHighPriorityTopicName;
 
-    public void sendMessage(final UserEvent userEvent) {
+    private final KafkaTemplate<String, UserEventV2> kafkaTemplate;
+
+    public void sendMessage(final UserEventV2 userEvent) {
         log.info("Sending user event: {}", userEvent.getUserId());
 
+        userEvent.validate();
+
+        if (userEvent.isPriorityEvent()) {
+            log.warn("High priority event detected for user: {}", userEvent.getUserId());
+            sendHighPriorityMessage(userEvent);
+        }
+
         this.kafkaTemplate.send(userEventTopicName, userEvent);
+    }
+
+    public void sendHighPriorityMessage(final UserEventV2 userEvent) {
+        this.kafkaTemplate.send(userEventHighPriorityTopicName, userEvent);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.kafkaexperimentation.util;
 
-import com.example.kafkaexperimentation.model.UserEvent;
+import com.example.kafkaexperimentation.model.UserEventV2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -20,7 +20,7 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 @Slf4j
 @Getter
 public class SerDeGenerator {
-    public static final Serde<UserEvent> USER_EVENT_SERDE = SerDeGenerator.createSerDe(UserEvent.class);
+    public static final Serde<UserEventV2> USER_EVENT_SERDE = SerDeGenerator.createSerDe(UserEventV2.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
             .configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
             // support Java 8 time (de)serialization

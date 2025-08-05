@@ -3,10 +3,13 @@ package com.example.kafkaexperimentation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * A User Event Service.
+ */
 @SpringBootApplication
-public class KafkaExperimentationApplication {
+public class UserEventServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KafkaExperimentationApplication.class, args);
+		SpringApplication.run(UserEventServiceApplication.class, args);
 	}
 }

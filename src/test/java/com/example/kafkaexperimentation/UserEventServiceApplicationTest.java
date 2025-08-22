@@ -3,6 +3,7 @@ package com.example.kafkaexperimentation;
 import com.example.kafkaexperimentation.controller.UserEventController;
 import com.example.kafkaexperimentation.model.UserEventV2;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @EmbeddedKafka(
 		partitions = 1, topics = {"${kafka.user-event.topic.name}"})
 class UserEventServiceApplicationTest {
-
 	@Autowired
 	private UserEventController userEventController;
 
@@ -35,8 +35,13 @@ class UserEventServiceApplicationTest {
 		records.add(record);
 	}
 
+	@BeforeEach
+	void clearQueue() {
+		records.clear();
+	}
+
 	@Test
-	void create_user_event() throws InterruptedException {
+	void user_event_created() throws InterruptedException {
 		final var event = UserEventV2.builder()
 				.userId(UUID.randomUUID())
 				.eventDatetime(LocalDateTime.now())
@@ -51,5 +56,10 @@ class UserEventServiceApplicationTest {
 		UserEventV2 receivedEvent = receivedRecord.value();
 		assertEquals(event.getUserId(), receivedEvent.getUserId());
 		assertEquals(event.getEventName(), receivedEvent.getEventName());
+	}
+
+	@Test
+	void high_priority_user_event_created() {
+		// TODO: Implement test for high priority event routing
 	}
 }

@@ -25,17 +25,6 @@ public class UserEventProducer {
     public void sendMessage(final UserEventV2 userEvent) {
         log.info("Sending user event: {}", userEvent.getUserId());
 
-        userEvent.validate();
-
-        if (userEvent.isPriorityEvent()) {
-            log.warn("High priority event detected for user: {}", userEvent.getUserId());
-            sendHighPriorityMessage(userEvent);
-        }
-
         this.kafkaTemplate.send(userEventTopicName, userEvent);
-    }
-
-    public void sendHighPriorityMessage(final UserEventV2 userEvent) {
-        this.kafkaTemplate.send(userEventHighPriorityTopicName, userEvent);
     }
 }

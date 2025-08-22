@@ -20,8 +20,10 @@ public class UserEventV2 {
     private static final String event_source = "user_event_service";
 
     private UUID userId;
+    private UUID eventId;
     private String eventName;
     private LocalDateTime eventDatetime;
+    private EventTypeEnum eventType;
 
     // A custom attribute map. Users can add their own attributes, and some are set by the service app owners.
     private Map<String, String> eventAttrMap;

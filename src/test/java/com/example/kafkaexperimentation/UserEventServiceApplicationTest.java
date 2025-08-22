@@ -1,6 +1,7 @@
 package com.example.kafkaexperimentation;
 
 import com.example.kafkaexperimentation.controller.UserEventController;
+import com.example.kafkaexperimentation.model.EventTypeEnum;
 import com.example.kafkaexperimentation.model.UserEventV2;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,8 @@ class UserEventServiceApplicationTest {
 	void user_event_created() throws InterruptedException {
 		final var event = UserEventV2.builder()
 				.userId(UUID.randomUUID())
+				.eventId(UUID.randomUUID())
+				.eventType(EventTypeEnum.AUTHORIZED)
 				.eventDatetime(LocalDateTime.now())
 				.eventName("test")
 				.build();

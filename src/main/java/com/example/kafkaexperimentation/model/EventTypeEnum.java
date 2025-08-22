@@ -5,9 +5,9 @@ package com.example.kafkaexperimentation.model;
  */
 public enum EventTypeEnum {
     // A user has been authorized to perform a purchase
-    AUTHORIZED,
+    AUTHORIZATION,
     // User has been Blocked from further actions due to security or other reason
-    BLOCKED,
+    BLOCK,
     // User has taken a custom action unique to the client application. Check eventName for more details.
     CUSTOM,
     // User has triggered an error through invalid action or system error
